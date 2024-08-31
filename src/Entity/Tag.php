@@ -72,4 +72,9 @@ class Tag
 
         return $this;
     }
+
+    function __tostring(): string
+    {
+        return $this->Name;
+    }
 }
