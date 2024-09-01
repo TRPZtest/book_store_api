@@ -13,11 +13,21 @@ use Symfony\Component\Serializer\SerializerInterface;
 class BooksController extends AbstractController 
 {
     #[Route(path:"api/books", name:"get_books", methods: ["GET"])]
-    public function books(/* #[MapQueryParameter]int $pageNumber, #[MapQueryParameter]int $pageSize, */ BookRepository $BookRepository,  SerializerInterface $serializer)  : Response
+    public function books(/* #[MapQueryParameter]int $pageNumber, #[MapQueryParameter]int $pageSize, */ BookRepository $BookRepository)  : Response
     {
         $books = $BookRepository->findAll();
-        $jsonBooks = $serializer->serialize($books, 'json', ['json_decode_recursion_depth' => 0]);
-                
-        return new JsonResponse(["books"=> $jsonBooks]);
+                     
+        return $this->json($books, Response::HTTP_OK);
+    }
+
+    #[Route(path:"api/book", name:"get_book_by_id", methods: ["GET"])]
+    public function book(#[MapQueryParameter]int $id,   BookRepository $BookRepository) : Response
+    {
+        $book = $BookRepository->find($id);
+
+        if (!$book) 
+            return $this->json(null, Response::HTTP_NOT_FOUND);
+        else
+            return $this->json($book, Response::HTTP_OK);
     }
 }

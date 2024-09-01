@@ -17,20 +17,20 @@ class Book
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Name = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 1200)]
-    private ?string $Description = null;
+    private ?string $description = null;
    
     #[ORM\ManyToOne(inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Category $Category = null;
+    private ?Category $category = null;
 
     /**
      * @var Collection<int, Tag>
      */
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'books')]
-    private Collection $Tags;
+    private Collection $tags;
 
     public function __construct()
     {
@@ -42,38 +42,38 @@ class Book
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getname(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): static
+    public function setname(string $name): static
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(string $Description): static
+    public function setdescription(string $description): static
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }
 
     public function getCategory(): ?Category
     {
-        return $this->Category;
+        return $this->category;
     }
 
-    public function setCategory(?Category $Category): static
+    public function setCategory(?Category $category): static
     {
-        $this->Category = $Category;
+        $this->category = $category;
 
         return $this;
     }
@@ -83,13 +83,13 @@ class Book
      */
     public function getTags(): Collection
     {
-        return $this->Tags;
+        return $this->tags;
     }
 
     public function addTag(Tag $tag): static
     {
-        if (!$this->Tags->contains($tag)) {
-            $this->Tags->add($tag);
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
         }
 
         return $this;
@@ -97,13 +97,13 @@ class Book
 
     public function removeTag(Tag $tag): static
     {
-        $this->Tags->removeElement($tag);
+        $this->tags->removeElement($tag);
 
         return $this;
     }
 
     function __tostring(): string
     {
-        return $this->Name;
+        return $this->name;
     }
 }
