@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BookRepository;
+use App\ValueResolver\DtoInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -34,7 +35,7 @@ class Book
 
     public function __construct()
     {
-        $this->Tags = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -42,12 +43,12 @@ class Book
         return $this->id;
     }
 
-    public function getname(): ?string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setname(string $name): static
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -59,7 +60,7 @@ class Book
         return $this->description;
     }
 
-    public function setdescription(string $description): static
+    public function setDescription(string $description): static
     {
         $this->description = $description;
 
