@@ -15,26 +15,26 @@ services:
       - database_data:/var/lib/postgresql/data:rw
   ###< doctrine/doctrine-bundle ###
 
-  # symfony:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile 
-  #   environment:
-  #     DATABASE_URL: postgres://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}
-  #     APP_ENV: dev
-  #   ports:
-  #     - "8000:8000" 
-  #   depends_on:
-  #     - database
-  #   volumes:
-  #     - .:/var/www/html    
+  symfony:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}
+      APP_ENV: dev
+    ports:
+      - "8000:8000" 
+    depends_on:
+      - database
+    volumes:
+      - .:/var/www/html    
 
-  # react_client:
-  #   build:
-  #     context: https://github.com/TRPZtest/book-store.git
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     REACT_API_BASE_URL: http://symfony:8000/api 
+  react_client:
+    build:
+      context: https://github.com/TRPZtest/book-store.git
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_API_BASE_URL: http://symfony:8000/api 
 volumes:
   database_data:
