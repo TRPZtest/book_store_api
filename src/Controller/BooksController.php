@@ -29,7 +29,7 @@ class BooksController extends AbstractController
             
         $totalPages = (int) ceil($totalBooks / $pageSize);
       
-        $books = $bookRepository->findBy([], ['id'], $pageSize, ($pageNumber - 1) * $pageSize); //order by id потрібен тому що postgres не створю кластеризований індекс по дефолту, через це змінюється порядок при оновленні данних.
+        $books = $bookRepository->findBy([], ['id' => 'ASC'], $pageSize, ($pageNumber - 1) * $pageSize); //order by id потрібен тому що postgres не створю кластеризований індекс по дефолту, через це змінюється порядок при оновленні данних.
     
         $dto = new GetBooksDTO();
         $dto->totalPageNumber = $totalPages;
