@@ -14,11 +14,12 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class BooksController extends AbstractController 
 {
     #[Route(path:"api/books", name:"get_books", methods: ["GET"])]
-    public function books(/* #[MapQueryParameter]int $pageNumber, #[MapQueryParameter]int $pageSize, */ BookRepository $bookRepository)  : Response
+    public function books( #[Assert\NotBlank]int $pageNumber,  #[Assert\NotBlank]#[MapQueryParameter]int $pageSize, BookRepository $bookRepository)  : Response
     {
         $books = $bookRepository->findAll();
                      
