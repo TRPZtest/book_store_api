@@ -21,8 +21,11 @@ migrate:
 fixtures:
 	docker compose exec symfony php bin/console doctrine:fixtures:load --no-interaction
 
+install:
+	composer install --no-interaction --prefer-dist --optimize-autoloader
+
 # Combination of migrate and fixtures
-setup: migrate fixtures
+setup: install migrate fixtures
 
 # Restart services (stop and start)
 restart: stop start
