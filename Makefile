@@ -14,13 +14,8 @@ shell:
 
 # Run migrations inside the Symfony container
 migrate:
-	docker compose exec symfony php bin/console doctrine:migrations:make
+	docker compose exec symfony php bin/console make:migration --no-interaction
 	docker compose exec symfony php bin/console doctrine:migrations:migrate --no-interaction
-
-# Run migrations inside the Symfony container
-migrate locally:
-	php bin/console make:migration
-	php bin/console doctrine:migrations:migrate --no-interaction
 
 # Load fixtures inside the Symfony container
 fixtures:

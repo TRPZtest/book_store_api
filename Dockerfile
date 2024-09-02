@@ -22,10 +22,6 @@ RUN apt-get update && apt-get install -y \
 # Install PHP dependencies
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Run database migrations and load fixtures
-RUN php bin/console doctrine:migrations:migrate --no-interaction \
-    && php bin/console doctrine:fixtures:load --no-interaction
-
 # Expose port 8000 and start Symfony server
 EXPOSE 8000
 CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
