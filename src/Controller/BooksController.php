@@ -9,12 +9,10 @@ use App\Repository\CategoryRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class BooksController extends AbstractController 
@@ -109,5 +107,18 @@ class BooksController extends AbstractController
         $em->flush();
 
         return $this->json($book, Response::HTTP_OK);
+    }
+
+    public function deleteBook(#[MapQueryParameter]int $id, BookRepository $bookRepository,   EntityManagerInterface $em): Response{
+        $book = $this->$bookRepository->find($id);
+
+        if (!$book) {
+            return $this->json(['message' => 'Book not found'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $em->remove($book);
+        $em->flush();
+        
+        return $this->json(null, Response::HTTP_OK);
     }
 }
