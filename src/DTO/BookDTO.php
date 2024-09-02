@@ -1,7 +1,4 @@
 <?php
-
-// src/DTO/BookDTO.php
-
 namespace App\DTO;
 
 use Symfony\Component\Validator\Constraints as Assert;
