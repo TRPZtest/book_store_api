@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\DTO\BookDTO;
 use App\DTO\EditBookDTO;
+use App\DTO\GetBooksDTO;
 use App\Entity\Book;
 use App\Repository\BookRepository;
 use App\Repository\CategoryRepository;
@@ -18,12 +19,26 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class BooksController extends AbstractController 
 {
-    #[Route(path:"api/books", name:"get_books", methods: ["GET"])]
-    public function books( #[Assert\NotBlank]int $pageNumber,  #[Assert\NotBlank]#[MapQueryParameter]int $pageSize, BookRepository $bookRepository)  : Response
-    {
-        $books = $bookRepository->findAll();
-                     
-        return $this->json($books, Response::HTTP_OK);
+    #[Route(path: "api/books", name: "get_books", methods: ["GET"])]
+    public function books(
+        #[MapQueryParameter] int $pageNumber,
+        #[MapQueryParameter] int $pageSize,
+        BookRepository $bookRepository
+    ): Response {   
+        $totalBooks = $bookRepository->count([]);
+            
+        $totalPages = (int) ceil($totalBooks / $pageSize);
+      
+        $books = $bookRepository->findBy([], null, $pageSize, ($pageNumber - 1) * $pageSize);
+    
+        $dto = new GetBooksDTO();
+        $dto->totalPageNumber = $totalPages;
+        $dto->currentPage = $pageNumber;
+        $dto->pageSize = $pageSize;
+        $dto->totalItems = $totalBooks;
+        $dto->books = $books; 
+    
+        return $this->json($dto, Response::HTTP_OK);
     }
 
     #[Route(path:"api/book", name:"get_book_by_id", methods: ["GET"])]

@@ -1,7 +1,9 @@
 <?php
 
-class getBooksDTO
+namespace App\DTO;
+
+class GetBooksDTO
 {
-    public Collection $books;
+    public array $books;
     public int $totalPageNumber;
 }
