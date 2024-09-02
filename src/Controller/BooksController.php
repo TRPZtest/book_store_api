@@ -125,8 +125,10 @@ class BooksController extends AbstractController
         return $this->json($book, Response::HTTP_OK);
     }
 
+
+    #[Route(path: "api/book", name: "delete_book", methods: ["DELETE"])]
     public function deleteBook(#[MapQueryParameter]int $id, BookRepository $bookRepository,   EntityManagerInterface $em): Response{
-        $book = $this->$bookRepository->find($id);
+        $book = $bookRepository->find($id);
 
         if (!$book) {
             return $this->json(['message' => 'Book not found'], Response::HTTP_BAD_REQUEST);
