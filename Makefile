@@ -1,7 +1,7 @@
 # Makefile for Docker and Symfony commands
 
 # Start Docker services
-up:
+start:
 	docker compose up -d
 
 # Stop Docker services
@@ -25,7 +25,7 @@ fixtures:
 setup: migrate fixtures
 
 # Restart services (stop and start)
-restart: stop up
+restart: stop start
 
 # View logs from all services
 logs:
